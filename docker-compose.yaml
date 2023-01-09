@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_USER: postgre
+      POSTGRES_PASSWORD: posttest2023
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:latest
+    command: redis-server --port 6379
+    container_name: redis_standalone
+    hostname: redis_standalone
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - "6379:6379"
